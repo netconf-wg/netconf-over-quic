@@ -16,7 +16,7 @@
         <postal>
           <street>Gaoxin 4th Road 6#</street>
           <street>Wuhan, Hubei 430079</street>
-          <street>China</street>
+          <country>China</country>
         </postal>
         <email>djy@fiberhome.com</email>
       </address>
@@ -25,19 +25,25 @@
       <organization abbrev="PCL">China PCL.</organization>
       <address>
         <email>yush@cae.cn</email>
+        <postal>
+          <country>China</country>
+        </postal>
       </address>
     </author>
     <author initials="W." surname="Cheng" fullname="Weiqiang Cheng">
       <organization abbrev="China Mobile">China Mobile</organization>
       <address>
         <email>chengweiqiang@chinamobile.com</email>
+        <postal>
+          <country>China</country>
+        </postal>
       </address>
     </author>
     <author initials="M." surname="Blanchet" fullname="Marc Blanchet">
       <organization abbrev="Viagenie">Viagenie</organization>
       <address>
-        <postal>
-          <street>Canada</street>
+          <postal>
+          <country>Canada</country>
         </postal>
         <email>marc.blanchet@viagenie.ca</email>
       </address>
@@ -46,7 +52,7 @@
       <organization>Cisco systems</organization>
       <address>
         <postal>
-          <street>Sweden</street>
+          <country>Sweden</country>
         </postal>
         <email>per.ietf@ionio.se</email>
       </address>
