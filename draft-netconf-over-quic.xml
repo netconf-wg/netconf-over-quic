@@ -6,10 +6,10 @@
 <!ENTITY nbhy "&#8209;">
 <!ENTITY wj "&#8288;">
 ]>
-<rfc xmlns:xi="http://www.w3.org/2001/XInclude" submissionType="IETF" docName="draft-ietf-netconf-over-quic-00" category="std" ipr="trust200902" obsoletes="" updates="" xml:lang="en" symRefs="true" sortRefs="false" tocInclude="true" version="3">
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" submissionType="IETF" docName="draft-ietf-netconf-over-quic-01" category="std" ipr="trust200902" obsoletes="" updates="" xml:lang="en" symRefs="true" sortRefs="false" tocInclude="true" version="3">
   <front>
     <title>NETCONF over QUIC</title>
-    <seriesInfo name="Internet-Draft" value="draft-ietf-netconf-over-quic-00"/>
+    <seriesInfo name="Internet-Draft" value="draft-ietf-netconf-over-quic-01"/>
     <author initials="J." surname="Dai" fullname="Jinyou Dai">
       <organization abbrev="CICT">China Information Communication Technologies Group.</organization>
       <address>
