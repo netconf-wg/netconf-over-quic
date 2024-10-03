@@ -24,25 +24,25 @@
     <author initials="S." surname="Yu" fullname="Shaohua Yu">
       <organization abbrev="PCL">China PCL.</organization>
       <address>
-        <email>yush@cae.cn</email>
         <postal>
           <country>China</country>
         </postal>
+        <email>yush@cae.cn</email>
       </address>
     </author>
     <author initials="W." surname="Cheng" fullname="Weiqiang Cheng">
       <organization abbrev="China Mobile">China Mobile</organization>
       <address>
-        <email>chengweiqiang@chinamobile.com</email>
         <postal>
           <country>China</country>
         </postal>
+        <email>chengweiqiang@chinamobile.com</email>
       </address>
     </author>
     <author initials="M." surname="Blanchet" fullname="Marc Blanchet">
       <organization abbrev="Viagenie">Viagenie</organization>
       <address>
-          <postal>
+        <postal>
           <country>Canada</country>
         </postal>
         <email>marc.blanchet@viagenie.ca</email>
