@@ -85,19 +85,14 @@
     <section>
       <name>Terminology and Definitions</name>
       <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in RFC 2119 <xref target="RFC2119"/>.</t>
-      <t>In this document, the terms "client" and "server" are used to refer to the two ends of the QUIC connection.  The client actively initiates the QUIC connection. The terms "manager" and "agent" are used to refer to the two ends of the NETCONF protocol session. The manager issues NETCONF remote procedure call (RPC) commands, and the agent   replies to those commands. Generally, a "manager" is a "client" meanwhile an "agent" is a "server".</t>
-      <ul>
-        <li>Client: The endpoint that initiates a QUIC connection, the NETCONF manager.</li>
-        <li>Server: The endpoint that accepts a QUIC connection, the NETCONF agent.</li>
-      </ul>
     </section>
     <section>
       <name>Connection Management</name>
       <section>
         <name>Connection establishment</name>
         <t>QUIC connections are established as described in <xref target="RFC9000"/>. During connection establishment, NETCONF over QUIC support is indicated by selecting the ALPN token as listed in the IANA section<xref target="IANA"/> in the crypto handshake.</t>
-        <t>The peer acting as the NETCONF manager MUST also act as the client meanwhile the peer acting as the NETCONF agent must also act as the server.</t>
-        <t>The manager should be the initiator of the QUIC connection to the agent meanwhile the agent act as a connection acceptor.</t>
+        <t>The peer acting as the NETCONF server MUST also act as the client meanwhile the peer acting as the NETCONF client must also act as the server.</t>
+        <t>The server should be the initiator of the QUIC connection to the client meanwhile the client act as a connection acceptor.</t>
       </section>
       <section>
         <name>Connection Termination</name>
@@ -111,7 +106,7 @@
           <t>When a NETCONF server receives a &lt;close-session&gt; request, it will gracefully close the NETCONF session. The server SHOULD close the associated QUIC connection.</t>
           <t>When a NETCONF entity receives a &lt;kill-session&gt; request for an open session, it SHOULD close the associated QUIC connection.</t>
           <t>When a NETCONF entity is detecting the interruption of the QUIC connection, it SHOULD send a &lt;close-session&gt; request to the peer NETCONF entity.</t>
-          <t>When a stateless reset event occurs, nothing needs to be done by either the manager or the agent.</t>
+          <t>When a stateless reset event occurs, nothing needs to be done by either the server or the client.</t>
         </section>
       </section>
     </section>
@@ -143,10 +138,10 @@ Layer                 Example
        +-------------+      +-----------------------------------------+
 ]]></artwork>
       </figure>
-      <t><xref target="netconf-protocol-layers-figure"/> shows that there are two kinds of main data flow exchanged between manager and agent:</t>
+      <t><xref target="netconf-protocol-layers-figure"/> shows that there are two kinds of main data flow exchanged between server and client:</t>
       <ul>
-        <li>Configuration data from manager to agent.</li>
-        <li>Notification data from agent to manager.</li>
+        <li>Configuration data from server to client.</li>
+        <li>Notification data from client to server.</li>
       </ul>
       <t>The two kinds of data flow need to be mapped into QUIC streams.</t>
       <t>QUIC Streams provide a lightweight, ordered byte-stream abstraction to an application. Streams can be unidirectional or bidirectional meanwhile streams can be initiated by either the client or the server. Unidirectional streams carry data in one direction: from the initiator  of the stream to its peer.  Bidirectional streams allow for data to be sent in both directions.</t>
@@ -179,13 +174,13 @@ Layer                 Example
         </tbody>
       </table>
       <section>
-        <name>Bidirectional Stream Between Manager and Agent</name>
-        <t>NETCONF protocol uses an RPC-based communication model. So, the configuration data from manager to agent is exchanged based on '&lt;RPC&gt;' (the manager initiating) and '&lt;RPC-Reply&gt;' (sent by the agent) and so on. So the messages used to exchange configuration data MUST be mapped into one or more bidirectional stream whose stream type is 0x0 according to the above table.</t>
+        <name>Bidirectional Stream Between server and client</name>
+        <t>NETCONF protocol uses an RPC-based communication model. So, the configuration data from server to client is exchanged based on '&lt;RPC&gt;' (the server initiating) and '&lt;RPC-Reply&gt;' (sent by the client) and so on. So the messages used to exchange configuration data MUST be mapped into one or more bidirectional stream whose stream type is 0x0 according to the above table.</t>
       </section>
       <section>
-        <name>Unidirectional Stream from Agent to Manager</name>
-        <t>There are some notification data exchanged between the agent and the manager.  Notification is an agent (server)-initiated message indicating that a certain event has been recognized by the agent (server).</t>
-        <t>Notification messages are initiated by the agent and no reply is needed from the manager. So the messages used to exchange configuration data SHOULD be mapped into one unidirectional stream whose stream type is 0x3 according to the above table.</t>
+        <name>Unidirectional Stream from client to server</name>
+        <t>There are some notification data exchanged between the client and the server.  Notification is an client (server)-initiated message indicating that a certain event has been recognized by the client (server).</t>
+        <t>Notification messages are initiated by the client and no reply is needed from the server. So the messages used to exchange configuration data SHOULD be mapped into one unidirectional stream whose stream type is 0x3 according to the above table.</t>
       </section>
     </section>
     <section>
