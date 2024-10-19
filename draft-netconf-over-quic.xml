@@ -72,15 +72,15 @@
         <li>NETCONF is connection-oriented, requiring a persistent connection between peers. This connection MUST provide reliabl and sequenced data delivery.  NETCONF connections are long-lived, persisting between protocol operations.</li>
         <li>NETCONF connections MUST provide authentication, data integrity, confidentiality, and replay protection.  NETCONF depends on the transport protocol for this capability.</li>
       </ol>
-      <t>The NETCONF protocol is not bound to any particular transport protocol, but allows a mapping to define how it can be implemented over any specific protocol. At present, some secure transport protocols are defined to carry NETCONF: Secure SHell(SSH)<xref target="RFC6242"/>, Transport Layer Security(TLS)<xref target="RFC7589"/>, Simple Object Access Protocol(SOAP)<xref target="RFC4743"/> and Blocks Extensible Exchange Protocol(BEEP)<xref target="RFC4744"/>.</t>
-      <t>However, because of the connection-oriented feature, almost all of the current secure transport protocols used by NETCONF is TCP based. As is well known, TCP has some shortcomings such as head-of-line blocking.</t>
+      <t>The NETCONF protocol is not bound to any particular transport protocol, but allows a mapping to define how it can be implemented over any specific protocol. </t>
+      <t>However, because of the connection-oriented feature, almost all of the current secure transport protocols used by NETCONF are TCP based. As is well known, TCP has some shortcomings such as head-of-line blocking.</t>
       <t>QUIC (<xref target="RFC9000"/><xref target="RFC9001"/>) conforms to the above requirements, therefore is also an appropriate transport protocol for NETCONF. Moreover, QUIC provides the following additional benefits not present in the other NETCONF transports:</t>
       <ul>
         <li>Single connection can be long lived and support multiple NETCONF RPC calls and responses within the same connection, using streams. This is very useful for a network management control station who is regularly monitoring devices and therefore having a long lived connection requires way less resources on both peers.</li>
         <li>1 RTT initial handshake that includes TLS.</li>
         <li>Adaptable to more difficult environments such as those with long delays(<xref target="I-D.many-deepspace-ip-assessment"/>, <xref target="I-D.huitema-quic-in-space"/>).</li>
       </ul>
-      <t>Therefore, QUIC is a proper transport protocol for the secure transport layer of NETCONF. In addition, QUIC does not have the TCP shortcomings such as head of line blocking. This document specifies how to use QUIC as the secure transport protocol for NETCONF.</t>
+      <t>Therefore, QUIC is a proper transport protocol for the secure transport layer of NETCONF. This document specifies how to use QUIC as the secure transport protocol for NETCONF.</t>
     </section>
     <section>
       <name>Terminology and Definitions</name>
