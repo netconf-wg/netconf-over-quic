@@ -107,7 +107,7 @@
         </section>
         <section>
           <name>Considerations for Connection Termination</name>
-          <t>When a NETCONF session is implemented based on a QUIC connection, the idle timeout should be disabled or the QUIC max_idle_timeout should be set appropriately in order to keep the QUIC connection persistent even if the NETCONF session is idle.</t>
+          <t>When a NETCONF session is implemented based on a QUIC connection, the  idle timeout should be set appropriately in order to keep the QUIC connection persistent even if the NETCONF session is idle. In some cases, disabling it may be a possible option.</t>
           <t>When a NETCONF server receives a &lt;close-session&gt; request, it will gracefully close the NETCONF session. The server SHOULD close the associated QUIC connection.</t>
           <t>When a NETCONF entity receives a &lt;kill-session&gt; request for an open session, it SHOULD close the associated QUIC connection.</t>
           <t>When a NETCONF entity is detecting the interruption of the QUIC connection, it SHOULD send a &lt;close-session&gt; request to the peer NETCONF entity.</t>
