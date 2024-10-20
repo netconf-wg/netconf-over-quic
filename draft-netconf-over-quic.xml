@@ -65,7 +65,7 @@
       head-of-line blocking issues and also providing more loss detection and
       congestion control than UDP. NETCONF over QUIC has privacy properties
       similar to NETCONF over TLS specified in
-      <xref target="I-D.draft-turner-netconf-over-tls13"/>.</t>
+      <xref target="I-D.ietf-netconf-over-tls13"/>.</t>
     </abstract>
   </front>
   <middle>
@@ -233,12 +233,9 @@ Layer                 Example
       </references>
       <references>
         <name>Informative References</name>
-        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.4743.xml"/>
-        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.4744.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.5246.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6242.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7301.xml"/>
-        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7589.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-netconf-over-tls13.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.many-deepspace-ip-assessment.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.huitema-quic-in-space.xml"/>
