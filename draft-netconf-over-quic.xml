@@ -91,8 +91,6 @@
       <section>
         <name>Connection establishment</name>
         <t>QUIC connections are established as described in <xref target="RFC9000"/>. During connection establishment, NETCONF over QUIC support is indicated by selecting the ALPN token as listed in the IANA section<xref target="IANA"/> in the crypto handshake.</t>
-        <t>The peer acting as the NETCONF server MUST also act as the client meanwhile the peer acting as the NETCONF client must also act as the server.</t>
-        <t>The server should be the initiator of the QUIC connection to the client meanwhile the client act as a connection acceptor.</t>
       </section>
       <section>
         <name>Connection Termination</name>
@@ -106,7 +104,7 @@
           <t>When a NETCONF server receives a &lt;close-session&gt; request, it will gracefully close the NETCONF session. The server SHOULD close the associated QUIC connection.</t>
           <t>When a NETCONF entity receives a &lt;kill-session&gt; request for an open session, it SHOULD close the associated QUIC connection.</t>
           <t>When a NETCONF entity is detecting the interruption of the QUIC connection, it SHOULD send a &lt;close-session&gt; request to the peer NETCONF entity.</t>
-          <t>When a stateless reset event occurs, nothing needs to be done by either the server or the client.</t>
+          <t>When a stateless reset event occurs, nothing needs to be done by either the client or the server.</t>
         </section>
       </section>
     </section>
@@ -138,10 +136,10 @@ Layer                 Example
        +-------------+      +-----------------------------------------+
 ]]></artwork>
       </figure>
-      <t><xref target="netconf-protocol-layers-figure"/> shows that there are two kinds of main data flow exchanged between server and client:</t>
+      <t><xref target="netconf-protocol-layers-figure"/> shows that there are two kinds of main data flow exchanged between client and server:</t>
       <ul>
-        <li>Configuration data from server to client.</li>
-        <li>Notification data from client to server.</li>
+        <li>Configuration data from client to server.</li>
+        <li>Notification data from server to client.</li>
       </ul>
       <t>The two kinds of data flow need to be mapped into QUIC streams.</t>
       <t>QUIC Streams provide a lightweight, ordered byte-stream abstraction to an application. Streams can be unidirectional or bidirectional meanwhile streams can be initiated by either the client or the server. Unidirectional streams carry data in one direction: from the initiator  of the stream to its peer.  Bidirectional streams allow for data to be sent in both directions.</t>
@@ -174,13 +172,13 @@ Layer                 Example
         </tbody>
       </table>
       <section>
-        <name>Bidirectional Stream Between server and client</name>
-        <t>NETCONF protocol uses an RPC-based communication model. So, the configuration data from server to client is exchanged based on '&lt;RPC&gt;' (the server initiating) and '&lt;RPC-Reply&gt;' (sent by the client) and so on. So the messages used to exchange configuration data MUST be mapped into one or more bidirectional stream whose stream type is 0x0 according to the above table.</t>
+        <name>Bidirectional Stream Between client and server</name>
+        <t>NETCONF protocol uses an RPC-based communication model. So, the configuration data from client to server is exchanged based on '&lt;rpc&gt;' (the server initiating) and '&lt;rpc-reply&gt;' (sent by the server) and so on. So the messages used to exchange configuration data MUST be mapped into one or more bidirectional stream whose stream type is 0x0 according to the above table.</t>
       </section>
       <section>
-        <name>Unidirectional Stream from client to server</name>
-        <t>There are some notification data exchanged between the client and the server.  Notification is an client (server)-initiated message indicating that a certain event has been recognized by the client (server).</t>
-        <t>Notification messages are initiated by the client and no reply is needed from the server. So the messages used to exchange configuration data SHOULD be mapped into one unidirectional stream whose stream type is 0x3 according to the above table.</t>
+        <name>Unidirectional Stream from server to client</name>
+        <t>There are some notification data exchanged between the client and the server.  Notification is an server initiated message indicating that a certain event has been recognized by the server.</t>
+        <t>Notification messages are initiated by the server and no reply is needed from the client. So the messages used to exchange configuration data SHOULD be mapped into one unidirectional stream whose stream type is 0x3 according to the above table.</t>
       </section>
     </section>
     <section>
