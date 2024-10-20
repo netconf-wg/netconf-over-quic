@@ -204,10 +204,10 @@ Layer                 Example
     <section anchor="IANA">
       <name>IANA Considerations</name>
       <t>This document creates a new registration for the identification of NETCONF over QUIC in the "Application Layer Protocol Negotiation (ALPN) Protocol IDs registry established in <xref target="RFC7301"/>.</t>
-      <t>The "NoQ" string identifies NETCONF over QUIC:</t>
+      <t>The "noq" string identifies NETCONF over QUIC:</t>
       <ul>
         <li>Protocol: NETCONF over QUIC</li>
-        <li>Identification Sequence: 0x4e 0x6f 0x51 ("NoQ")</li>
+        <li>Identification Sequence: 0x6e 0x6f 0x71 ("noq")</li>
         <li>Specification: This document</li>
       </ul>
       <t>In addition, it is requested for IANA to reserve a UDP port TBD for 'NETCONF over QUIC'.</t>
