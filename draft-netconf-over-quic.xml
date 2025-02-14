@@ -6,7 +6,7 @@
 <!ENTITY nbhy "&#8209;">
 <!ENTITY wj "&#8288;">
 ]>
-<rfc xmlns:xi="http://www.w3.org/2001/XInclude" submissionType="IETF" docName="draft-ietf-netconf-over-quic-01" category="std" ipr="trust200902" obsoletes="" updates="" xml:lang="en" symRefs="true" sortRefs="false" tocInclude="true" version="3">
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" submissionType="IETF" docName="draft-ietf-netconf-over-quic-01" category="std" ipr="trust200902" obsoletes="" updates="" xml:lang="en" symRefs="true" sortRefs="false" tocInclude="true" consensus="true" version="3">
   <front>
     <title>NETCONF over QUIC</title>
     <seriesInfo name="Internet-Draft" value="draft-ietf-netconf-over-quic-01"/>
@@ -57,7 +57,7 @@
         <email>per.ietf@ionio.se</email>
       </address>
     </author>
-    <date year="2024"/>
+    <date year="2025"/>
     <abstract>
       <t>This document specifies how to use QUIC as a secure transport for
       exchanging Network Configuration Protocol (NETCONF) messages. QUIC
@@ -67,6 +67,21 @@
       similar to NETCONF over TLS specified in
       <xref target="I-D.ietf-netconf-over-tls13"/>.</t>
     </abstract>
+
+    <note>
+      <name>Editorial note (to be removed by the RFC Editor</name>
+      <t>This draft contains placeholder values that need to be replaced
+        with finalized values at the time of publication. This note summarizes
+        all of the substitutions that are needed. No other RFC Editor
+        instructions are specified elsewhere in this document.</t>
+      <t>Artwork in this document contains shorthand references to drafts in
+          progress.  Please apply the following replacements:</t>
+      <ul>
+        <li><tt>AAAA</tt> --&gt; the assigned RFC value for this draft</li>
+        <li><tt>BBBB</tt> --&gt; the assigned RFC value for draft-ietf-netconf-netconf-client-server</li>
+        <li><tt>CCCC</tt> --&gt; the assigned RFC value for draft-ietf-netconf-quic-client-server</li>
+      </ul>
+    </note>
   </front>
   <middle>
     <section>
@@ -199,6 +214,65 @@ Layer                 Example
       </section>
     </section>
     <section>
+      <name>Overview of YANG Module</name>
+      <t>This document defines one YANG module that augments the NETCONF
+        YANG groupings <xref target="I-D.ietf-netconf-netconf-client-server"/>
+        with the QUIC transport YANG groupings
+        <xref target="I-D.ietf-netconf-quic-client-server"/>. This section
+        presents an overview of the YANG Module.</t>
+      <section>
+        <name>The "netconf-client" augmentation</name>
+        <t>The following tree diagram <xref target="RFC8340"/> illustrates the
+          augmentation of the QUIC client grouping into the NETCONF client
+          container:</t>
+        <figure>
+          <artwork><![CDATA[
+              INSERT_TEXT_FROM_FILE(refs/tree-ietf-netconf-quic-client-augment.txt)
+]]></artwork>
+        </figure>
+        <t>Comments:</t>
+        <ul>
+          <li>This augmentation to the "ncc:transport" container in
+            "ietf-netconf-client.yang" adds a "quic" case with a "quic"
+            container which uses the "quicc:quic-client" grouping.</li>
+          <li>Note that the if-feature "quic-initiate" conditions if the "quic"
+            centainer is available in the schema.</li>
+        </ul>
+      </section>
+      <section>
+        <name>The "netconf-server" augmentation</name>
+        <t>The following tree diagram <xref target="RFC8340"/> illustrates the
+          augmentation of the QUIC server grouping into the NETCONF server
+          container:</t>
+        <figure>
+          <artwork><![CDATA[
+              INSERT_TEXT_FROM_FILE(refs/tree-ietf-netconf-quic-server-augment.txt)
+]]></artwork>
+        </figure>
+        <t>Comments:</t>
+        <ul>
+          <li>This augmentation to the "ncs:transport" container in
+            "ietf-netconf-server.yang" adds a "quic" case with a "quic"
+            container which uses the "quics:quic-server" grouping.</li>
+          <li>Note that the if-feature "quic-listen" conditions if the "quic"
+            centainer is available in the schema.</li>
+        </ul>
+      </section>
+    </section>
+    <section>
+      <name>YANG Module</name>
+      <t>This YANG module has normative references to
+        <xref target="I-D.ietf-netconf-netconf-client-server"/> and
+        <xref target="I-D.ietf-netconf-quic-client-server"/>.</t>
+      <t>&lt;CODE BEGINS&gt; file "ietf-netconf-quic@YYYY-MM-DD.yang"</t>
+      <figure>
+        <artwork><![CDATA[
+INSERT_TEXT_FROM_FILE(ietf-netconf-quic@YYYY-MM-DD.yang)
+]]></artwork>
+      </figure>
+      <t>&lt;CODE ENDS&gt;</t>
+    </section>
+    <section>
       <name>Security Considerations</name>
       <t>The security considerations described throughout <xref target="RFC5246"/> and <xref target="RFC6241"/> apply here as well. This document does not require to support third-party authentication (e.g., backend Authentication, Authorization, and Accounting (AAA) servers) due to the fact that TLS does not specify this way of authentication and that NETCONF depends on the transport protocol for the authentication service. If third-party authentication is needed, TLS client certificates, BEEP or SSH transport can be used. Especially TLS client certificates are recommended to be used here.</t>
       <t>An attacker might be able to inject arbitrary NETCONF messages via some application that does not carefully check exchanged messages deliberately insert the delimiter sequence in a NETCONF message to create a DoS attack.  Hence, applications and NETCONF APIs MUST ensure that the delimiter sequence defined in Section 2.1 never appears in NETCONF messages; otherwise, those messages can be dropped, garbled, or misinterpreted.</t>
@@ -226,6 +300,8 @@ Layer                 Example
       <name>References</name>
       <references>
         <name>Normative References</name>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-netconf-netconf-client-server.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-netconf-quic-client-server.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6241.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9000.xml"/>
@@ -236,6 +312,7 @@ Layer                 Example
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.5246.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6242.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7301.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8340.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-netconf-over-tls13.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.many-deepspace-ip-assessment.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.huitema-quic-in-space.xml"/>
