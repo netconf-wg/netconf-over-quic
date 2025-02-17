@@ -57,7 +57,7 @@
         <email>per.ietf@ionio.se</email>
       </address>
     </author>
-    <date year="2024"/>
+    <date year="2025"/>
     <abstract>
       <t>This document specifies how to use QUIC as a secure transport for
       exchanging Network Configuration Protocol (NETCONF) messages. QUIC
