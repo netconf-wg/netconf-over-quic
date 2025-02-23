@@ -193,7 +193,7 @@ Layer                 Example
       </table>
       <section>
         <name>Bidirectional Stream Between client and server</name>
-        <t>NETCONF protocol uses an RPC-based communication model. Configuration data from client to server is exchanged based on '&lt;rpc&gt;' (the client initiating) and '&lt;rpc-reply&gt;' (sent by the server) and so on. Since RPC processing is serialized and ordered within a session<xref target="RFC6241" section=“4.5"/>, a bidirectional stream MUST be used for each NETCONF session.</t>
+        <t>NETCONF protocol uses an RPC-based communication model. Configuration data from client to server is exchanged based on '&lt;rpc&gt;' (the client initiating) and '&lt;rpc-reply&gt;' (sent by the server) and so on. Since RPC processing is serialized and ordered within a session (<xref target="RFC6241"/> section 4.5), a bidirectional stream MUST be used for each NETCONF session.</t>
       </section>
       <section>
         <name>Unidirectional Stream from server to client</name>
