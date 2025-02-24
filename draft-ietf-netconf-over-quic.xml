@@ -89,7 +89,7 @@
       <t>NETCONF can be conceptually partitioned into four layers: content, operation, message and security transport layers.</t>
       <t>The Secure Transport layer provides a communication path between the client and server.  NETCONF can be layered over any transport protocol that provides a set of basic requirements, such as:</t>
       <ol>
-        <li>NETCONF is connection-oriented, requiring a persistent connection between peers. This connection MUST provide reliabl and sequenced data delivery.  NETCONF connections are long-lived, persisting between protocol operations.</li>
+        <li>NETCONF is connection-oriented, requiring a persistent connection between peers. This connection MUST provide reliable and sequenced data delivery.  NETCONF connections are long-lived, persisting between protocol operations.</li>
         <li>NETCONF connections MUST provide authentication, data integrity, confidentiality, and replay protection.  NETCONF depends on the transport protocol for this capability.</li>
       </ol>
       <t>The NETCONF protocol is not bound to any particular transport protocol, but allows a mapping to define how it can be implemented over any specific protocol. </t>
@@ -110,7 +110,7 @@
       <name>Connection Management</name>
       <section>
         <name>Connection establishment</name>
-        <t>QUIC connections are established as described in <xref target="RFC9000"/>. During connection establishment, NETCONF over QUIC support is indicated by selecting the ALPN token as listed in the IANA section<xref target="IANA"/> in the crypto handshake.</t>
+        <t>QUIC connections are established as described in <xref target="RFC9000"/>. During connection establishment, NETCONF over QUIC support is indicated by selecting the ALPN token as listed in <xref target="IANA"/> in the cryptographic handshake.</t>
       </section>
       <section>
         <name>Connection Termination</name>
@@ -235,7 +235,7 @@ Layer                 Example
             "ietf-netconf-client.yang" adds a "quic" case with a "quic"
             container which uses the "quicc:quic-client" grouping.</li>
           <li>Note that the if-feature "quic-initiate" conditions if the "quic"
-            centainer is available in the schema.</li>
+            container is available in the schema.</li>
         </ul>
       </section>
       <section>
@@ -254,7 +254,7 @@ Layer                 Example
             "ietf-netconf-server.yang" adds a "quic" case with a "quic"
             container which uses the "quics:quic-server" grouping.</li>
           <li>Note that the if-feature "quic-listen" conditions if the "quic"
-            centainer is available in the schema.</li>
+            container is available in the schema.</li>
         </ul>
       </section>
     </section>
