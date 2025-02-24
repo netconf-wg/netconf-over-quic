@@ -151,7 +151,7 @@ Layer                 Example
        +-------------+      +-----------------+      +----------------+
               |                       |                      |
        +-------------+      +-----------------------------------------+
-   (1) |   Secure    |      |  SSH, TLS, BEEP/TLS, SOAP/HTTP/TLS, ... |
+   (1) |   Secure    |      |               SSH, TLS, ...             |
        |  Transport  |      |                                         |
        +-------------+      +-----------------------------------------+
 ]]></artwork>
@@ -273,7 +273,7 @@ INSERT_TEXT_FROM_FILE(ietf-netconf-quic@YYYY-MM-DD.yang)
     </section>
     <section>
       <name>Security Considerations</name>
-      <t>The security considerations described throughout <xref target="RFC5246"/> and <xref target="RFC6241"/> apply here as well. This document does not require to support third-party authentication (e.g., backend Authentication, Authorization, and Accounting (AAA) servers) due to the fact that TLS does not specify this way of authentication and that NETCONF depends on the transport protocol for the authentication service. If third-party authentication is needed, TLS client certificates, BEEP or SSH transport can be used. Especially TLS client certificates are recommended to be used here.</t>
+      <t>The security considerations described throughout <xref target="RFC5246"/> and <xref target="RFC6241"/> apply here as well. This document does not require to support third-party authentication (e.g., backend Authentication, Authorization, and Accounting (AAA) servers) due to the fact that TLS does not specify this way of authentication and that NETCONF depends on the transport protocol for the authentication service. If third-party authentication is needed, TLS client certificates or SSH transport can be used. Especially TLS client certificates are recommended to be used here.</t>
       <t>An attacker might be able to inject arbitrary NETCONF messages via some application that does not carefully check exchanged messages deliberately insert the delimiter sequence in a NETCONF message to create a DoS attack.  Hence, applications and NETCONF APIs MUST ensure that the delimiter sequence defined in Section 2.1 never appears in NETCONF messages; otherwise, those messages can be dropped, garbled, or misinterpreted.</t>
       <t>If invalid data or malformed messages are encountered, a robust implementation of this document MUST silently discard the message without further processing and then stop the NETCONF session.</t>
       <t>Finally, this document does not introduce any new security considerations compared to <xref target="RFC6242"/>.</t>
