@@ -193,7 +193,7 @@ Layer                 Example
       </table>
       <section>
         <name>Bidirectional Stream Between client and server</name>
-        <t>NETCONF protocol uses an RPC-based communication model. Configuration data from client to server is exchanged based on '&lt;rpc&gt;' (the client initiating) and '&lt;rpc-reply&gt;' (sent by the server) and so on. Since RPC processing is serialized and ordered within a session (<xref target="RFC6241"/> section 4.5), a bidirectional stream MUST be used for each NETCONF session.</t>
+        <t>NETCONF protocol uses an RPC-based communication model. Configuration data from client to server is exchanged based on '&lt;rpc&gt;' (the client initiating) and '&lt;rpc-reply&gt;' (sent by the server) and so on. The messages used to exchange configuration data MUST be mapped into one or more bidirectional stream whose stream type is 0x0 according to the above table. Since RPC processing is serialized and ordered within a session (<xref target="RFC6241"/> section 4.5), a bidirectional stream MUST be used for each NETCONF session.</t>
       </section>
       <section>
         <name>Unidirectional Stream from server to client</name>
@@ -291,8 +291,9 @@ INSERT_TEXT_FROM_FILE(ietf-netconf-quic@YYYY-MM-DD.yang)
     </section>
     <section>
       <name>Acknowledgements</name>
-      <t>The authors would like to acknowledge all contributors including Huaimo Chen, Lifen Zhou et al. for their beneficial comments. 
-      The following people have provided useful comments to enhance this document, in no specific order: Andy Bierman.</t>
+      <t>The authors would like to acknowledge all contributors including Yang
+          Kou, Xueshun Wang, Kent Watsen, Jeffrey Haas, Balázs Lengyel, Robert
+          Wilton, Huaimo Chen, Lifen Zhou, Andy Bierman et al. for their beneficial comments.</t>
       <t>The authors would like to acknowledge the very useful feedback from an early implementor: Adolfo Ochagavia.</t>
     </section>
   </middle>
