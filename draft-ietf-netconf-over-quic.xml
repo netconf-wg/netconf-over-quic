@@ -63,8 +63,7 @@
       provides encryption properties similar to TLS, while eliminating TCP
       head-of-line blocking issues and also providing more loss detection and
       congestion control than UDP. NETCONF over QUIC has privacy properties
-      similar to NETCONF over TLS specified in
-      <xref target="I-D.ietf-netconf-over-tls13"/>.</t>
+      similar to NETCONF over TLS.</t>
     </abstract>
 
     <note>
