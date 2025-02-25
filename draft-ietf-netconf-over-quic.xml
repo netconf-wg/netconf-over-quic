@@ -97,7 +97,7 @@
       <ul>
         <li>Single connection can be long lived and support multiple NETCONF RPC calls and responses within the same connection, using streams. This is very useful for a network management control station who is regularly monitoring devices and therefore having a long lived connection requires way less resources on both peers.</li>
         <li>1 RTT initial handshake that includes TLS.</li>
-        <li>Adaptable to more difficult environments such as those with long delays(<xref target="I-D.many-deepspace-ip-assessment"/>, <xref target="I-D.huitema-quic-in-space"/>).</li>
+        <li>Adaptable to more difficult environments such as those with long delays (<xref target="I-D.many-tiptop-usecase"/>, <xref target="I-D.many-tiptop-quic-profile"/> .</li>
       </ul>
       <t>Therefore, QUIC is a proper transport protocol for the secure transport layer of NETCONF. This document specifies how to use QUIC as the secure transport protocol for NETCONF.</t>
     </section>
@@ -284,7 +284,7 @@ INSERT_TEXT_FROM_FILE(ietf-netconf-quic@YYYY-MM-DD.yang)
       <name>Security Considerations</name>
       <t>
           The security considerations described throughout
-          <xref target="RFC5246"/> and <xref target="RFC6241"/> apply here as
+          <xref target="RFC8446"/> and <xref target="RFC6241"/> apply here as
           well.This document requires verification of server identity and
           client identity according to <xref target="RFC7589"/>.
       </t>
@@ -325,14 +325,13 @@ INSERT_TEXT_FROM_FILE(ietf-netconf-quic@YYYY-MM-DD.yang)
       </references>
       <references>
         <name>Informative References</name>
-        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.5246.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8446.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6242.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7301.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7589.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8340.xml"/>
-        <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-netconf-over-tls13.xml"/>
-        <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.many-deepspace-ip-assessment.xml"/>
-        <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.huitema-quic-in-space.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.many-tiptop-usecase.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.many-tiptop-quic-profile.xml"/>
       </references>
     </references>
   </back>
