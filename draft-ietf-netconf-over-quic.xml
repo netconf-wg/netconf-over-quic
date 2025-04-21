@@ -6,10 +6,10 @@
 <!ENTITY nbhy "&#8209;">
 <!ENTITY wj "&#8288;">
 ]>
-<rfc xmlns:xi="http://www.w3.org/2001/XInclude" submissionType="IETF" docName="draft-ietf-netconf-over-quic-02" category="std" ipr="trust200902" obsoletes="" updates="" xml:lang="en" symRefs="true" sortRefs="false" tocInclude="true" version="3">
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" submissionType="IETF" docName="draft-ietf-netconf-over-quic-03" category="std" ipr="trust200902" obsoletes="" updates="" xml:lang="en" symRefs="true" sortRefs="false" tocInclude="true" version="3">
   <front>
     <title>NETCONF over QUIC</title>
-    <seriesInfo name="Internet-Draft" value="draft-ietf-netconf-over-quic-02"/>
+    <seriesInfo name="Internet-Draft" value="draft-ietf-netconf-over-quic-03"/>
     <author initials="J." surname="Dai" fullname="Jinyou Dai">
       <organization abbrev="CICT">China Information Communication Technologies Group.</organization>
       <address>
@@ -337,7 +337,19 @@ INSERT_TEXT_FROM_FILE(ietf-netconf-quic@YYYY-MM-DD.yang)
         <li>Identification Sequence: 0x6e 0x6f 0x71 ("noq")</li>
         <li>Specification: This document</li>
       </ul>
-      <t>In addition, it is requested for IANA to reserve a UDP port TBD for 'NETCONF over QUIC'.</t>
+      <t>This document also requests IANA to reserve a UDP port for 'NETCONF over QUIC':</t>
+      <ul>
+          <li>Service Name: netconf-quic</li>
+          <li>Transport Protocol(s): UDP</li>
+          <li>Assignee: IESG iesg@ietf.org</li>
+          <li>Contact: IETF Chair chair@ietf.org</li>
+          <li>Description: NETCONF protocol over QUIC transport</li>
+          <li>Reference: RFC AAAA</li>
+          <li>Port number: 831</li>
+          <li>Assignment Notes: Port 831 is currently assigned to netconf-beep,
+              but a de-assignment is requested in
+              <xref target="I-D.ietf-netconf-port-numbers"/>.</li>
+      </ul>
     </section>
     <section>
       <name>Acknowledgements</name>
@@ -362,6 +374,7 @@ INSERT_TEXT_FROM_FILE(ietf-netconf-quic@YYYY-MM-DD.yang)
       </references>
       <references>
         <name>Informative References</name>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-netconf-port-numbers.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8446.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6242.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7301.xml"/>
