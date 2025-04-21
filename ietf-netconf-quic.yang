@@ -44,7 +44,7 @@ module ietf-netconf-quic {
      Author:  Weiqiang Cheng
               <mailto:chengeiqiang@chinamobile.com>
 
-     Author:  March Blanchet
+     Author:  Marc Blanchet
               <mailto:marc.blanchet@viagenie.ca>
 
      Author:  Per Andersson
