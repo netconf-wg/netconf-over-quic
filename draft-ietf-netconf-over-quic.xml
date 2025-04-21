@@ -110,6 +110,38 @@
       <section>
         <name>Connection establishment</name>
         <t>QUIC connections are established as described in <xref target="RFC9000"/>. During connection establishment, NETCONF over QUIC support is indicated by selecting the ALPN token as listed in <xref target="IANA"/> in the cryptographic handshake.</t>
+        <section>
+            <name>Early data</name>
+            <t>
+                The QUIC protocol uses TLS 1.3 messages to secure the transport.
+                This means that Early data (aka 0-RTT data) is supported.
+                <xref target="RFC9001"/>
+            </t>
+            <t>
+                Early data (aka 0-RTT data) is a mechanism defined in TLS 1.3
+                <xref target="I-D.ietf-tls-rfc8446bis"/> that allows a client
+                to send data ("early data") as part of the first flight of
+                messages to a server. Note that TLS 1.3 can be used without
+                early data as per Appendix F.5 of
+                <xref target="I-D.ietf-tls-rfc8446bis"/>. In fact, early data is
+                permitted by TLS 1.3 only when the client and server share a
+                Pre-Shared Key (PSK), either obtained externally or via a
+                previous handshake. The client uses the PSK to authenticate the
+                server and to encrypt the early data.
+            </t>
+            <t>
+                As noted in Section 2.3 of
+                <xref target="I-D.ietf-tls-rfc8446bis"/>, the security
+                properties for early data are weaker than those for subsequent
+                TLS-protected data. In particular, early data is not forward
+                secret, and there is no protection against the replay of early
+                data between connections. Appendix E.5 of
+                <xref target="I-D.ietf-tls-rfc8446bis"/> requires applications
+                not use early data without a profile that defines its use. This
+                document specifies that NETCONF over QUIC implementations MUST
+                NOT use early data.
+            </t>
+        </section>
       </section>
       <section>
         <name>Connection Termination</name>
@@ -305,9 +337,10 @@ INSERT_TEXT_FROM_FILE(ietf-netconf-quic@YYYY-MM-DD.yang)
     </section>
     <section>
       <name>Acknowledgements</name>
-      <t>The authors would like to acknowledge all contributors including Yang
-          Kou, Xueshun Wang, Kent Watsen, Jeffrey Haas, Balázs Lengyel, Robert
-          Wilton, Huaimo Chen, Lifen Zhou, Andy Bierman et al. for their beneficial comments.</t>
+      <t>The authors would like to acknowledge the contributors Yang Kou,
+         Xueshun Wang, Kent Watsen, Jeffrey Haas, Balázs Lengyel, Robert Wilton,
+         Huaimo Chen, Lifen Zhou, Andy Bierman, and Sean Turner for their
+         beneficial comments.</t>
       <t>The authors would like to acknowledge the very useful feedback from an early implementor: Adolfo Ochagavia.</t>
     </section>
   </middle>
@@ -332,6 +365,7 @@ INSERT_TEXT_FROM_FILE(ietf-netconf-quic@YYYY-MM-DD.yang)
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8340.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.many-tiptop-usecase.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.many-tiptop-quic-profile.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-tls-rfc8446bis.xml"/>
       </references>
     </references>
   </back>
