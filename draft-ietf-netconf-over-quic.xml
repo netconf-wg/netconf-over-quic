@@ -231,6 +231,10 @@ Layer                 Example
         <t>There are some notification data exchanged between the client and the server.  Notification is an server initiated message indicating that a certain event has been recognized by the server.</t>
         <t>Notification messages are initiated by the server and no reply is needed from the client. So the messages used to exchange configuration data SHOULD be mapped into one unidirectional stream whose stream type is 0x3 according to the above table.</t>
       </section>
+      <section>
+          <name>RFC8071 Call Home Specific Case</name>
+          <t>In the case of <xref target="RFC8071"/> Call home feature, where the NETCONF server initiates the transport connection to the NETCONF client, <xref target="tab-stream-id-types"/> will be used as follows: - the Client, referred in the Table, means the QUIC initiating party, therefore the NETCONF server and - the Server means the QUIC receiving party, therefore the NETCONF client.</t>
+      </section>
     </section>
     <section>
       <name>Endpoint Authentication</name>
@@ -363,6 +367,7 @@ INSERT_TEXT_FROM_FILE(ietf-netconf-quic@YYYY-MM-DD.yang)
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7301.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7589.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8340.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8071.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.many-tiptop-usecase.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.many-tiptop-quic-profile.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-tls-rfc8446bis.xml"/>
