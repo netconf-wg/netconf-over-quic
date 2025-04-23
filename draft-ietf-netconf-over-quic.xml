@@ -343,7 +343,7 @@ INSERT_TEXT_FROM_FILE(ietf-netconf-quic@YYYY-MM-DD.yang)
       <name>Acknowledgements</name>
       <t>The authors would like to acknowledge the contributors Yang Kou,
          Xueshun Wang, Kent Watsen, Jeffrey Haas, Balázs Lengyel, Robert Wilton,
-         Huaimo Chen, Lifen Zhou, Andy Bierman, and Sean Turner for their
+         Huaimo Chen, Lifen Zhou, Andy Bierman, Sean Turner, and Joe Clarke for their
          beneficial comments.</t>
       <t>The authors would like to acknowledge the very useful feedback from an early implementor: Adolfo Ochagavia.</t>
     </section>
