@@ -102,7 +102,6 @@ module ietf-netconf-quic {
 
   // Augments
 
-  /* FIXME seems pyang don't support this augment */
   augment "/ncc:netconf-client/ncc:initiate" {
     if-feature "quic-initiate";
     description
@@ -126,7 +125,6 @@ module ietf-netconf-quic {
     }
   }
 
-  /* FIXME seems pyang don't support this augment */
   augment "/ncs:netconf-server/ncs:listen" {
     if-feature "quic-listen";
     description
