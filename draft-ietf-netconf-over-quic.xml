@@ -59,11 +59,13 @@
     </author>
     <abstract>
       <t>This document specifies how to use QUIC as a secure transport for
-      exchanging Network Configuration Protocol (NETCONF) messages. QUIC
-      provides encryption properties similar to TLS, while eliminating TCP
-      head-of-line blocking issues and also providing more loss detection and
-      congestion control than UDP. NETCONF over QUIC has privacy properties
-      similar to NETCONF over TLS.</t>
+      exchanging Network Configuration Protocol (NETCONF) messages.
+      NETCONF over QUIC allows to take advantage of QUIC streams, for
+      example, to eliminate some TCP head-of-line blocking issues.
+      NETCONF over QUIC provides security properties similar to NETCONF
+      over TLS.</t>
+      <t>This document also defines a YANG module which augments the
+      ietf-netconf-client and ietf-netconf-server YANG modules.</t>
     </abstract>
 
     <note>
@@ -109,7 +111,10 @@
       <name>Connection Management</name>
       <section>
         <name>Connection establishment</name>
-        <t>QUIC connections are established as described in <xref target="RFC9000"/>. During connection establishment, NETCONF over QUIC support is indicated by selecting the ALPN token as listed in <xref target="IANA"/> in the cryptographic handshake.</t>
+        <t>QUIC connections are established as described in
+        <xref target="RFC9000"/>. During connection establishment, support is
+        indicated by selecting the ALPN token registered for NETCONF over QUIC
+        (see <xref target="IANA"/>) in the cryptographic handshake.</t>
         <section>
             <name>Early data</name>
             <t>
@@ -161,7 +166,8 @@
     </section>
     <section>
       <name>Stream mapping and usage</name>
-      <t><xref target="RFC6241"/> specifies protocol layers of NETCONF as shown below.</t>
+      <t>The NETCONF protocol layers specified in <xref target="RFC6241"/> are
+      presented in Figure 1.</t>
       <figure anchor="netconf-protocol-layers-figure">
         <name>NETCONF Protocol Layers</name>
         <artwork name="" type="" align="left" alt=""><![CDATA[
@@ -224,12 +230,35 @@ Layer                 Example
       </table>
       <section>
         <name>Bidirectional Stream Between client and server</name>
-        <t>NETCONF protocol uses an RPC-based communication model. Configuration data from client to server is exchanged based on '&lt;rpc&gt;' (the client initiating) and '&lt;rpc-reply&gt;' (sent by the server) and so on. The messages used to exchange configuration data MUST be mapped into one or more bidirectional stream whose stream type is 0x0 according to the above table. Since RPC processing is serialized and ordered within a session (<xref target="RFC6241"/> section 4.5), a bidirectional stream MUST be used for each NETCONF session.</t>
+        <t>NETCONF protocol uses an RPC-based communication model.
+        Configuration data from client to server is exchanged based on
+        '&lt;rpc&gt;' (the client initiating) and '&lt;rpc-reply&gt;'
+        (sent by the server) and so on. The messages used to exchange
+        configuration data MUST be mapped into one or more bidirectional
+        stream whose stream type is 0x0 according to Table 1. Since RPC
+        processing is serialized and ordered within a session
+        (<xref target="RFC6241"/> section 4.5), a bidirectional stream MUST
+        MUST be used for each NETCONF session.</t>
       </section>
       <section>
         <name>Unidirectional Stream from server to client</name>
         <t>There are some notification data exchanged between the client and the server.  Notification is an server initiated message indicating that a certain event has been recognized by the server.</t>
-        <t>Notification messages are initiated by the server and no reply is needed from the client. So the messages used to exchange configuration data SHOULD be mapped into one unidirectional stream whose stream type is 0x3 according to the above table.</t>
+        <t>Notification messages are initiated by the server and no reply
+        is needed from the client. So the messages used to exchange
+        notification data SHOULD be mapped into one unidirectional
+        stream whose stream type is 0x3 according to Table 1.</t>
+      </section>
+      <section>
+        <name>Mapping of QUIC connection, QUIC stream, and NETCONF session</name>
+        <t>The relationship among NETCONF sessions, QUIC streams and QUIC
+        connections is illustrted as follows.</t>
+        <ul>
+          <li>One NETCONF session is allowed per QUIC connection.</li>
+          <li>The NETCONF sessions, except subscriptions, runs over a QUIC
+              bidi-stream.</li>
+          <li>NETCONF Notifications and Subscribed Notifications runs over one
+              QUIC uni-stream per subscription.</li>
+        </ul>
       </section>
       <section>
           <name>RFC8071 Call Home Specific Case</name>
@@ -256,6 +285,14 @@ Layer                 Example
           <xref target="RFC7589" section="7"/>.
         </t>
       </section>
+    </section>
+    <section>
+      <name>Framing</name>
+      <t>
+          In order to mitigate delimiter injection attacks chunked framing as
+          defined in <xref target="RFC6242"/> is required for NETCONF over
+          QUIC.
+      </t>
     </section>
     <section>
       <name>Overview of YANG Module</name>
@@ -321,12 +358,12 @@ INSERT_TEXT_FROM_FILE(ietf-netconf-quic@YYYY-MM-DD.yang)
       <t>
           The security considerations described throughout
           <xref target="RFC8446"/> and <xref target="RFC6241"/> apply here as
-          well.This document requires verification of server identity and
+          well. This document requires verification of server identity and
           client identity according to <xref target="RFC7589"/>.
       </t>
-      <t>An attacker might be able to inject arbitrary NETCONF messages via some application that does not carefully check exchanged messages deliberately insert the delimiter sequence in a NETCONF message to create a DoS attack.  Hence, applications and NETCONF APIs MUST ensure that the delimiter sequence defined in Section 2.1 never appears in NETCONF messages; otherwise, those messages can be dropped, garbled, or misinterpreted.</t>
+      <t>
+              An attacker might be able to inject arbitrary NETCONF messages via some application that does not carefully check exchanged messages deliberately insert the delimiter sequence in a NETCONF message to create a DoS attack.  Hence, applications and NETCONF APIs MUST ensure that the delimiter sequence defined in Section 2.1 never appears in NETCONF messages; otherwise, those messages can be dropped, garbled, or misinterpreted.</t>
       <t>If invalid data or malformed messages are encountered, a robust implementation of this document MUST silently discard the message without further processing and then stop the NETCONF session.</t>
-      <t>Finally, this document does not introduce any new security considerations compared to <xref target="RFC6242"/>.</t>
     </section>
     <section anchor="IANA">
       <name>IANA Considerations</name>
@@ -369,6 +406,7 @@ INSERT_TEXT_FROM_FILE(ietf-netconf-quic@YYYY-MM-DD.yang)
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-netconf-quic-client-server.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6241.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6242.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9000.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9001.xml"/>
       </references>
@@ -376,7 +414,6 @@ INSERT_TEXT_FROM_FILE(ietf-netconf-quic@YYYY-MM-DD.yang)
         <name>Informative References</name>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-netconf-port-numbers.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8446.xml"/>
-        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6242.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7301.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7589.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8340.xml"/>
