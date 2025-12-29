@@ -6,10 +6,10 @@
 <!ENTITY nbhy "&#8209;">
 <!ENTITY wj "&#8288;">
 ]>
-<rfc xmlns:xi="http://www.w3.org/2001/XInclude" submissionType="IETF" docName="draft-ietf-netconf-over-quic-05" category="std" consensus="true" ipr="trust200902" obsoletes="" updates="" xml:lang="en" symRefs="true" sortRefs="false" tocInclude="true" version="3">
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" submissionType="IETF" docName="draft-ietf-netconf-over-quic-06" category="std" consensus="true" ipr="trust200902" obsoletes="" updates="" xml:lang="en" symRefs="true" sortRefs="false" tocInclude="true" version="3">
   <front>
     <title>NETCONF over QUIC</title>
-    <seriesInfo name="Internet-Draft" value="draft-ietf-netconf-over-quic-05"/>
+    <seriesInfo name="Internet-Draft" value="draft-ietf-netconf-over-quic-06"/>
     <author initials="J." surname="Dai" fullname="Jinyou Dai">
       <organization abbrev="CICT">China Information Communication Technologies Group.</organization>
       <address>
@@ -168,7 +168,7 @@
       <name>Stream mapping and usage</name>
       <t>The NETCONF protocol layers specified in <xref target="RFC6241"/> are
       presented in Figure 1.</t>
-      <figure anchor="netconf-protocol-layers-figure">
+      <figure anchor="netconf-protocol-layers-figure" align="left" suppress-title="false" pn="figure-1">
         <name>NETCONF Protocol Layers</name>
         <artwork name="" type="" align="left" alt=""><![CDATA[
 Layer                 Example
@@ -200,53 +200,43 @@ Layer                 Example
       </ul>
       <t>The two kinds of data flow need to be mapped into QUIC streams.</t>
       <t>QUIC Streams provide a lightweight, ordered byte-stream abstraction to an application. Streams can be unidirectional or bidirectional meanwhile streams can be initiated by either the client or the server. Unidirectional streams carry data in one direction: from the initiator  of the stream to its peer.  Bidirectional streams allow for data to be sent in both directions.</t>
-      <t>QUIC uses Stream ID to identify the stream. The least significant bit (0x1) of the stream ID identifies the initiator of the stream. The second least significant bit (0x2) of the stream ID distinguishes between bidirectional streams (with the bit set to 0) and unidirectional streams. Table 1 describes the four types of streams and this table can also be seen from <xref target="RFC9000"/>.</t>
+      <t>QUIC uses Stream ID to identify the stream. The least significant bit (0x1) of the stream ID identifies the initiator of the stream. The second least significant bit (0x2) of the stream ID distinguishes between bidirectional streams (with the bit set to 0) and unidirectional streams. There are four types of streams which are described in <xref target="RFC9000"/>. And Table 1 also describes the four types of streams</t>
       <table anchor="tab-stream-id-types" align="center">
-        <name>Stream ID Types</name>
+        <name>Stream Acronym Types</name>
         <thead>
           <tr>
-            <th align="left"> Bits</th>
+            <th align="left"> Acronym</th>
             <th align="left"> Stream Type</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td align="left">0x0</td>
+            <td align="left">C-BD</td>
             <td align="left">Client-Initiated, Bidirectional</td>
           </tr>
           <tr>
-            <td align="left">0x1</td>
+            <td align="left">S-BD</td>
             <td align="left">Server-Initiated, Bidirectional</td>
           </tr>
           <tr>
-            <td align="left">0x2</td>
+            <td align="left">C-UN</td>
             <td align="left">Client-Initiated, Unidirectional</td>
           </tr>
           <tr>
-            <td align="left">0x3</td>
+            <td align="left">S-UN</td>
             <td align="left">Server-Initiated, Unidirectional</td>
           </tr>
         </tbody>
       </table>
       <section>
-        <name>Bidirectional Stream Between client and server</name>
-        <t>NETCONF protocol uses an RPC-based communication model.
-        Configuration data from client to server is exchanged based on
-        '&lt;rpc&gt;' (the client initiating) and '&lt;rpc-reply&gt;'
-        (sent by the server) and so on. The messages used to exchange
-        configuration data MUST be mapped into one or more bidirectional
-        stream whose stream type is 0x0 according to Table 1. Since RPC
-        processing is serialized and ordered within a session
-        (<xref target="RFC6241"/> section 4.5), a bidirectional stream MUST
-        MUST be used for each NETCONF session.</t>
-      </section>
+	    <name>Bidirectional Stream Between client and server</name>
+        <t>NETCONF protocol uses an RPC-based communication model. Configuration data from client to server is exchanged based on '&lt;rpc&gt;' (the client initiating) and '&lt;rpc-reply&gt;' (sent by the server) and so on.</t>
+		<t>The messages used to exchange configuration data MUST be mapped into one bidirectional stream whose acronym is 'C-BD' according to Table 1. Since RPC processing is serialized and ordered within a session (<xref target="RFC6241"/> section 4.5), a bidirectional stream MUST be used for each NETCONF session.</t>        
+	  </section>
       <section>
         <name>Unidirectional Stream from server to client</name>
         <t>There are some notification data exchanged between the client and the server.  Notification is an server initiated message indicating that a certain event has been recognized by the server.</t>
-        <t>Notification messages are initiated by the server and no reply
-        is needed from the client. So the messages used to exchange
-        notification data SHOULD be mapped into one unidirectional
-        stream whose stream type is 0x3 according to Table 1.</t>
+        <t>Notification messages are initiated by the server and no reply is needed from the client.  So the messages used to exchange notification data MUST be mapped into one unidirectional stream whose acronym is 'S-UN' according to Table 1.</t>
       </section>
       <section>
         <name>Mapping of QUIC connection, QUIC stream, and NETCONF session</name>
@@ -259,13 +249,46 @@ Layer                 Example
           <li>NETCONF Notifications and Subscribed Notifications runs over one
               QUIC uni-stream per subscription.</li>
         </ul>
-      </section>
-      <section>
-          <name>RFC8071 Call Home Specific Case</name>
-          <t>In the case of <xref target="RFC8071"/> Call home feature, where the NETCONF server initiates the transport connection to the NETCONF client, <xref target="tab-stream-id-types"/> will be used as follows: - the Client, referred in the Table, means the QUIC initiating party, therefore the NETCONF server and - the Server means the QUIC receiving party, therefore the NETCONF client.</t>
-      </section>
+		<t>The notifications refer to messages corresonding to a subscription from server to client after the subscription process is over.</t>
+      </section>     
     </section>
     <section>
+     <name>Call home considerations</name>
+	 <section>
+          <name>protocol-layering perspective</name>
+          <t>The following diagram illustrates call home from a protocol-layering perspective based on QUIC:</t>
+          <figure anchor="call-home-NoQ" align="left" suppress-title="false" pn="figure-2">
+           <name>Call Home Sequence Diagram based on QUIC</name>
+           <artwork name="" type="" align="left" alt=""><![CDATA[
+               Server                              Client
+                 |                                               |
+                 |         1. QUIC                          |
+                 |----------------------------------->|
+                 |                                               |
+                 |                                               |
+                 |         2. NETCONF over QUIC  |
+                 |<-----------------------------------|
+                 |                                               |
+                 |                                               |
+                 |         3. NETCONF/RESTCONF |
+                 |<-----------------------------------|
+                 |                                               |
+		          Note: Arrows point from the "client" to
+                  the "server" at each protocol layer.        
+]]>        </artwork>
+      </figure>   
+		<t> This diagram makes the following points:</t> 
+		<ul>
+          <li>The NETCONF/RESTCONF server begins by initiating a QUIC connection to the NETCONF/RESTCONF client.</li>
+          <li>Using this QUIC connection, the NETCONF/RESTCONF client initiates a NETCONF/RESTCONF session to the NETCONF/RESTCONF server.</li>          
+        </ul>
+     </section>
+	 <section>
+          <name>RFC8071 Call Home Specific Case</name>
+          <t>In the case of <xref target="RFC8071"/> Call home feature, where the NETCONF server initiates the transport connection to the NETCONF client, <xref target="tab-stream-id-types"/> will be used as follows: - the Client, referred in the Table, means the QUIC initiating party, therefore the NETCONF server and - the Server means the QUIC receiving party, therefore the NETCONF client.</t>
+     </section>
+	</section>	
+	<section>
       <name>Endpoint Authentication</name>
       <t>
         Since QUIC uses TLS 1.3 this is used to verify server identity and
@@ -292,6 +315,11 @@ Layer                 Example
           In order to mitigate delimiter injection attacks chunked framing as
           defined in <xref target="RFC6242"/> is required for NETCONF over
           QUIC.
+      </t>
+	  <t>
+          The &lt;hello&gt; message MUST be followed by the character sequence 
+   RFC 5539 assumes that the end-of-message (EOM) sequence, ]]&gt;]]&gt;>.  Upon reception of the &lt;hello&gt; message, the receiving peer's
+   QUIC layer conceptually passes the &lt;hello&gt; message to the Messages layer.  If the :base:1.1 capability is advertised by both peers, the chunked framing mechanism defined in Section 4.2 of [<xref target="RFC6242"/>] is used for the remainder of the NETCONF session.  Otherwise, the old end-of-message-based mechanism (see Section 4.3 of [<xref target="RFC6242"/>]) is used.
       </t>
     </section>
     <section>
@@ -353,6 +381,25 @@ INSERT_TEXT_FROM_FILE(ietf-netconf-quic@YYYY-MM-DD.yang)
       </figure>
       <t>&lt;CODE ENDS&gt;</t>
     </section>
+   <section>
+      <name>Error codes</name>
+	  <section>
+        <name>Transport Error Codes</name>
+      <t>
+         Error codes of secure transport layer are specified in [<xref target="RFC9000"/>]. There are not new transport Error Codes defined for NETCONF over QUIC. 		  
+      </t>
+	  </section>
+      <section> 
+	   <name>Application Error Codes</name>
+      <t>
+        According to [<xref target="RFC9000"/>], management of application error codes is left to application protocols. and application error codes can be used by RESET_STREAM Frame and STOP_SENDING Frame. Application error codes for NETCONF over QUIC are listed as follows:</t>
+       <ul>
+          <li>NO_NETCONF PROTOCOL ERROR (0x00):  no NETCONF errors happens.</li>
+          <li>NETCONF CLOSE SESSION_ERROR (0x01):  The peer tries to close a session which is not initiated by it.</li>
+		  <li> NETCONF CLOSE STREAM ERROR (0x02):  The peer tries to close a bidirectional stream when the NETCONF session is active.</li>
+        </ul>
+	  </section>
+    </section>
     <section>
       <name>Security Considerations</name>
       <t>
@@ -360,9 +407,7 @@ INSERT_TEXT_FROM_FILE(ietf-netconf-quic@YYYY-MM-DD.yang)
           <xref target="RFC8446"/> and <xref target="RFC6241"/> apply here as
           well. This document requires verification of server identity and
           client identity according to <xref target="RFC7589"/>.
-      </t>
-      <t>
-              An attacker might be able to inject arbitrary NETCONF messages via some application that does not carefully check exchanged messages deliberately insert the delimiter sequence in a NETCONF message to create a DoS attack.  Hence, applications and NETCONF APIs MUST ensure that the delimiter sequence defined in Section 2.1 never appears in NETCONF messages; otherwise, those messages can be dropped, garbled, or misinterpreted.</t>
+      </t>      
       <t>If invalid data or malformed messages are encountered, a robust implementation of this document MUST silently discard the message without further processing and then stop the NETCONF session.</t>
     </section>
     <section anchor="IANA">
@@ -386,6 +431,15 @@ INSERT_TEXT_FROM_FILE(ietf-netconf-quic@YYYY-MM-DD.yang)
           <li>Assignment Notes: Port 831 is currently assigned to netconf-beep,
               but a de-assignment is requested in
               <xref target="I-D.ietf-netconf-port-numbers"/>.</li>
+      </ul>
+	  <ul>
+          <li>Service Name: netconf-ch-quic</li>
+          <li>Transport Protocol(s): UDP</li>
+          <li>Assignee: IESG iesg@ietf.org</li>
+          <li>Contact: IETF Chair chair@ietf.org</li>
+          <li>Description: NETCONF Call Home (QUIC)</li>
+          <li>Reference: RFC AAAA</li>
+          <li>Port number: 4335</li>         
       </ul>
     </section>
     <section>
