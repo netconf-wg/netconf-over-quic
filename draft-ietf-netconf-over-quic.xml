@@ -270,7 +270,7 @@ Layer                 Example
                  |<-----------------------------------|
                  |                                    |
                  |                                    |
-                 |         3. NETCONF/RESTCONF        |
+                 |         3. NETCONF                 |
                  |<-----------------------------------|
                  |                                    |
                   Note: Arrows point from the "client" to
@@ -279,8 +279,8 @@ Layer                 Example
       </figure>
         <t> This diagram makes the following points:</t>
         <ul>
-          <li>The NETCONF/RESTCONF server begins by initiating a QUIC connection to the NETCONF/RESTCONF client.</li>
-          <li>Using this QUIC connection, the NETCONF/RESTCONF client initiates a NETCONF/RESTCONF session to the NETCONF/RESTCONF server.</li>
+          <li>The NETCONF server begins by initiating a QUIC connection to the NETCONF client.</li>
+          <li>Using this QUIC connection, the NETCONF client initiates a NETCONF session to the NETCONF server.</li>
         </ul>
      </section>
      <section>
