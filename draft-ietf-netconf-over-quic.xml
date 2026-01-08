@@ -6,12 +6,12 @@
 <!ENTITY nbhy "&#8209;">
 <!ENTITY wj "&#8288;">
 ]>
-<rfc xmlns:xi="http://www.w3.org/2001/XInclude" submissionType="IETF" docName="draft-ietf-netconf-over-quic-06" category="std" consensus="true" ipr="trust200902" obsoletes="" updates="" xml:lang="en" symRefs="true" sortRefs="false" tocInclude="true" version="3">
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" submissionType="IETF" docName="draft-ietf-netconf-over-quic-07" category="std" consensus="true" ipr="trust200902" obsoletes="" updates="" xml:lang="en" symRefs="true" sortRefs="false" tocInclude="true" version="3">
   <front>
     <title>NETCONF over QUIC</title>
-    <seriesInfo name="Internet-Draft" value="draft-ietf-netconf-over-quic-06"/>
+    <seriesInfo name="Internet-Draft" value="draft-ietf-netconf-over-quic-07"/>
     <author initials="J." surname="Dai" fullname="Jinyou Dai">
-      <organization abbrev="CICT">China Information Communication Technologies Group.</organization>
+      <organization abbrev="CICT">Fiberhome Telecom LTD./CICT.</organization>
       <address>
         <postal>
           <street>Gaoxin 4th Road 6#</street>
@@ -250,6 +250,7 @@ Layer                 Example
               QUIC uni-stream per subscription.</li>
         </ul>
         <t>The notifications refer to messages corresonding to a subscription from server to client after the subscription process is over.</t>
+        <t>The server is responsible for creating and managing the uni-streams corresponding to notifications. When a certain subscription is cancelled by the client, the server must stop using the stream corresponding to the subscription. </t>
       </section>
     </section>
     <section>
@@ -461,17 +462,17 @@ INSERT_TEXT_FROM_FILE(ietf-netconf-quic@YYYY-MM-DD.yang)
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6241.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6242.xml"/>
-        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9000.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8071.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8446.xml"/>
+	    <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9000.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9001.xml"/>
       </references>
       <references>
         <name>Informative References</name>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-netconf-port-numbers.xml"/>
-        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8446.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7301.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7589.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8340.xml"/>
-        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8071.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.many-tiptop-usecase.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.many-tiptop-quic-profile.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-tls-rfc8446bis.xml"/>
