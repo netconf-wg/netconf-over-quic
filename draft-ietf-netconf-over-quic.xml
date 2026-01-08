@@ -6,12 +6,12 @@
 <!ENTITY nbhy "&#8209;">
 <!ENTITY wj "&#8288;">
 ]>
-<rfc xmlns:xi="http://www.w3.org/2001/XInclude" submissionType="IETF" docName="draft-ietf-netconf-over-quic-06" category="std" consensus="true" ipr="trust200902" obsoletes="" updates="" xml:lang="en" symRefs="true" sortRefs="false" tocInclude="true" version="3">
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" submissionType="IETF" docName="draft-ietf-netconf-over-quic-07" category="std" consensus="true" ipr="trust200902" obsoletes="" updates="" xml:lang="en" symRefs="true" sortRefs="false" tocInclude="true" version="3">
   <front>
     <title>NETCONF over QUIC</title>
-    <seriesInfo name="Internet-Draft" value="draft-ietf-netconf-over-quic-06"/>
+    <seriesInfo name="Internet-Draft" value="draft-ietf-netconf-over-quic-07"/>
     <author initials="J." surname="Dai" fullname="Jinyou Dai">
-      <organization abbrev="CICT">China Information Communication Technologies Group.</organization>
+      <organization abbrev="CICT">Fiberhome Telecom LTD./CICT.</organization>
       <address>
         <postal>
           <street>Gaoxin 4th Road 6#</street>
@@ -229,10 +229,10 @@ Layer                 Example
         </tbody>
       </table>
       <section>
-	    <name>Bidirectional Stream Between client and server</name>
+        <name>Bidirectional Stream Between client and server</name>
         <t>NETCONF protocol uses an RPC-based communication model. Configuration data from client to server is exchanged based on '&lt;rpc&gt;' (the client initiating) and '&lt;rpc-reply&gt;' (sent by the server) and so on.</t>
-		<t>The messages used to exchange configuration data MUST be mapped into one bidirectional stream whose acronym is 'C-BD' according to Table 1. Since RPC processing is serialized and ordered within a session (<xref target="RFC6241"/> section 4.5), a bidirectional stream MUST be used for each NETCONF session.</t>        
-	  </section>
+        <t>The messages used to exchange configuration data MUST be mapped into one bidirectional stream whose acronym is 'C-BD' according to Table 1. Since RPC processing is serialized and ordered within a session (<xref target="RFC6241"/> section 4.5), a bidirectional stream MUST be used for each NETCONF session.</t>
+      </section>
       <section>
         <name>Unidirectional Stream from server to client</name>
         <t>There are some notification data exchanged between the client and the server.  Notification is an server initiated message indicating that a certain event has been recognized by the server.</t>
@@ -249,46 +249,47 @@ Layer                 Example
           <li>NETCONF Notifications and Subscribed Notifications runs over one
               QUIC uni-stream per subscription.</li>
         </ul>
-		<t>The notifications refer to messages corresonding to a subscription from server to client after the subscription process is over.</t>
-      </section>     
+        <t>The notifications refer to messages corresonding to a subscription from server to client after the subscription process is over.</t>
+        <t>The server is responsible for creating and managing the uni-streams corresponding to notifications. When a certain subscription is cancelled by the client, the server must stop using the stream corresponding to the subscription. </t>
+      </section>
     </section>
     <section>
      <name>Call home considerations</name>
-	 <section>
+     <section>
           <name>protocol-layering perspective</name>
           <t>The following diagram illustrates call home from a protocol-layering perspective based on QUIC:</t>
           <figure anchor="call-home-NoQ" align="left" suppress-title="false" pn="figure-2">
            <name>Call Home Sequence Diagram based on QUIC</name>
            <artwork name="" type="" align="left" alt=""><![CDATA[
                Server                              Client
-                 |                                               |
-                 |         1. QUIC                          |
+                 |                                    |
+                 |         1. QUIC                    |
                  |----------------------------------->|
-                 |                                               |
-                 |                                               |
-                 |         2. NETCONF over QUIC  |
+                 |                                    |
+                 |                                    |
+                 |         2. NETCONF over QUIC       |
                  |<-----------------------------------|
-                 |                                               |
-                 |                                               |
-                 |         3. NETCONF/RESTCONF |
+                 |                                    |
+                 |                                    |
+                 |         3. NETCONF                 |
                  |<-----------------------------------|
-                 |                                               |
-		          Note: Arrows point from the "client" to
-                  the "server" at each protocol layer.        
+                 |                                    |
+                  Note: Arrows point from the "client" to
+                  the "server" at each protocol layer.
 ]]>        </artwork>
-      </figure>   
-		<t> This diagram makes the following points:</t> 
-		<ul>
-          <li>The NETCONF/RESTCONF server begins by initiating a QUIC connection to the NETCONF/RESTCONF client.</li>
-          <li>Using this QUIC connection, the NETCONF/RESTCONF client initiates a NETCONF/RESTCONF session to the NETCONF/RESTCONF server.</li>          
+      </figure>
+        <t> This diagram makes the following points:</t>
+        <ul>
+          <li>The NETCONF server begins by initiating a QUIC connection to the NETCONF client.</li>
+          <li>Using this QUIC connection, the NETCONF client initiates a NETCONF session to the NETCONF server.</li>
         </ul>
      </section>
-	 <section>
+     <section>
           <name>RFC8071 Call Home Specific Case</name>
           <t>In the case of <xref target="RFC8071"/> Call home feature, where the NETCONF server initiates the transport connection to the NETCONF client, <xref target="tab-stream-id-types"/> will be used as follows: - the Client, referred in the Table, means the QUIC initiating party, therefore the NETCONF server and - the Server means the QUIC receiving party, therefore the NETCONF client.</t>
      </section>
-	</section>	
-	<section>
+    </section>
+    <section>
       <name>Endpoint Authentication</name>
       <t>
         Since QUIC uses TLS 1.3 this is used to verify server identity and
@@ -316,8 +317,8 @@ Layer                 Example
           defined in <xref target="RFC6242"/> is required for NETCONF over
           QUIC.
       </t>
-	  <t>
-          The &lt;hello&gt; message MUST be followed by the character sequence 
+      <t>
+          The &lt;hello&gt; message MUST be followed by the character sequence
    RFC 5539 assumes that the end-of-message (EOM) sequence, ]]&gt;]]&gt;>.  Upon reception of the &lt;hello&gt; message, the receiving peer's
    QUIC layer conceptually passes the &lt;hello&gt; message to the Messages layer.  If the :base:1.1 capability is advertised by both peers, the chunked framing mechanism defined in Section 4.2 of [<xref target="RFC6242"/>] is used for the remainder of the NETCONF session.  Otherwise, the old end-of-message-based mechanism (see Section 4.3 of [<xref target="RFC6242"/>]) is used.
       </t>
@@ -383,22 +384,22 @@ INSERT_TEXT_FROM_FILE(ietf-netconf-quic@YYYY-MM-DD.yang)
     </section>
    <section>
       <name>Error codes</name>
-	  <section>
+      <section>
         <name>Transport Error Codes</name>
       <t>
-         Error codes of secure transport layer are specified in [<xref target="RFC9000"/>]. There are not new transport Error Codes defined for NETCONF over QUIC. 		  
+         Error codes of secure transport layer are specified in [<xref target="RFC9000"/>]. There are not new transport Error Codes defined for NETCONF over QUIC.
       </t>
-	  </section>
-      <section> 
-	   <name>Application Error Codes</name>
+      </section>
+      <section>
+        <name>Application Error Codes</name>
       <t>
         According to [<xref target="RFC9000"/>], management of application error codes is left to application protocols. and application error codes can be used by RESET_STREAM Frame and STOP_SENDING Frame. Application error codes for NETCONF over QUIC are listed as follows:</t>
        <ul>
           <li>NO_NETCONF PROTOCOL ERROR (0x00):  no NETCONF errors happens.</li>
           <li>NETCONF CLOSE SESSION_ERROR (0x01):  The peer tries to close a session which is not initiated by it.</li>
-		  <li> NETCONF CLOSE STREAM ERROR (0x02):  The peer tries to close a bidirectional stream when the NETCONF session is active.</li>
+          <li>NETCONF CLOSE STREAM ERROR (0x02):  The peer tries to close a bidirectional stream when the NETCONF session is active.</li>
         </ul>
-	  </section>
+      </section>
     </section>
     <section>
       <name>Security Considerations</name>
@@ -407,7 +408,7 @@ INSERT_TEXT_FROM_FILE(ietf-netconf-quic@YYYY-MM-DD.yang)
           <xref target="RFC8446"/> and <xref target="RFC6241"/> apply here as
           well. This document requires verification of server identity and
           client identity according to <xref target="RFC7589"/>.
-      </t>      
+      </t>
       <t>If invalid data or malformed messages are encountered, a robust implementation of this document MUST silently discard the message without further processing and then stop the NETCONF session.</t>
     </section>
     <section anchor="IANA">
@@ -432,14 +433,14 @@ INSERT_TEXT_FROM_FILE(ietf-netconf-quic@YYYY-MM-DD.yang)
               but a de-assignment is requested in
               <xref target="I-D.ietf-netconf-port-numbers"/>.</li>
       </ul>
-	  <ul>
+      <ul>
           <li>Service Name: netconf-ch-quic</li>
           <li>Transport Protocol(s): UDP</li>
           <li>Assignee: IESG iesg@ietf.org</li>
           <li>Contact: IETF Chair chair@ietf.org</li>
           <li>Description: NETCONF Call Home (QUIC)</li>
           <li>Reference: RFC AAAA</li>
-          <li>Port number: 4335</li>         
+          <li>Port number: 4335</li>
       </ul>
     </section>
     <section>
@@ -461,17 +462,17 @@ INSERT_TEXT_FROM_FILE(ietf-netconf-quic@YYYY-MM-DD.yang)
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6241.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6242.xml"/>
-        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9000.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8071.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8446.xml"/>
+	    <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9000.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9001.xml"/>
       </references>
       <references>
         <name>Informative References</name>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-netconf-port-numbers.xml"/>
-        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8446.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7301.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7589.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8340.xml"/>
-        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8071.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.many-tiptop-usecase.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.many-tiptop-quic-profile.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-tls-rfc8446bis.xml"/>
