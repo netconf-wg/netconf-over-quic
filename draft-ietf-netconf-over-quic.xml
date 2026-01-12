@@ -11,7 +11,7 @@
     <title>NETCONF over QUIC</title>
     <seriesInfo name="Internet-Draft" value="draft-ietf-netconf-over-quic-07"/>
     <author initials="J." surname="Dai" fullname="Jinyou Dai">
-      <organization abbrev="CICT">Fiberhome Telecom LTD./CICT.</organization>
+      <organization abbrev="Fiberhome/CICT">Fiberhome Telecom LTD./CICT.</organization>
       <address>
         <postal>
           <street>Gaoxin 4th Road 6#</street>
@@ -249,8 +249,9 @@ Layer                 Example
           <li>NETCONF Notifications and Subscribed Notifications runs over one
               QUIC uni-stream per subscription.</li>
         </ul>
-        <t>The notifications refer to messages corresonding to a subscription from server to client after the subscription process is over.</t>
-        <t>The server is responsible for creating and managing the uni-streams corresponding to notifications. When a certain subscription is cancelled by the client, the server must stop using the stream corresponding to the subscription. </t>
+        <t>A subscription is initiated over the bidirectional stream by invoking either a "create-subscription" <xref target="RFC5277"/> or a "establish-subscription" <xref target="RFC8369"/> RPC. The server then creates a unidirectional stream towards the client and starts sending  notifications on it.</t>
+        <t>Both the server and and client need to keep track of which subscription is linked to each stream, how this is implemented is out of scope for this document. </t>
+		<t>When a subscription is terminated the server notifies the client if applicable for the subscription then tears down the unidirectional  stream. </t>
       </section>
     </section>
     <section>
@@ -460,10 +461,12 @@ INSERT_TEXT_FROM_FILE(ietf-netconf-quic@YYYY-MM-DD.yang)
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-netconf-netconf-client-server.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-netconf-quic-client-server.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.5277.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6241.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6242.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8071.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8446.xml"/>
+	    <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8369.xml"/>
 	    <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9000.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9001.xml"/>
       </references>
