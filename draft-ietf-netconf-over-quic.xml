@@ -251,7 +251,7 @@ Layer                 Example
         </ul>
         <t>A subscription is initiated over the bidirectional stream by invoking either a "create-subscription" <xref target="RFC5277"/> or a "establish-subscription" <xref target="RFC8369"/> RPC. The server then creates a unidirectional stream towards the client and starts sending  notifications on it.</t>
         <t>Both the server and and client need to keep track of which subscription is linked to each stream, how this is implemented is out of scope for this document. </t>
-		<t>When a subscription is terminated the server notifies the client if applicable for the subscription then tears down the unidirectional  stream. </t>
+        <t>When a subscription is terminated the server notifies the client if applicable for the subscription then tears down the unidirectional  stream. </t>
       </section>
     </section>
     <section>
@@ -466,8 +466,8 @@ INSERT_TEXT_FROM_FILE(ietf-netconf-quic@YYYY-MM-DD.yang)
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6242.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8071.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8446.xml"/>
-	    <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8369.xml"/>
-	    <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9000.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8369.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9000.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9001.xml"/>
       </references>
       <references>
