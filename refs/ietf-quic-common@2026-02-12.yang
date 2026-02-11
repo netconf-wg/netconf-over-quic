@@ -29,7 +29,7 @@ module ietf-quic-common {
      used by both 'ietf-quic-client' and 'ietf-quic-server'
      modules.
 
-     Copyright (c) 2024 IETF Trust and the persons identified
+     Copyright (c) 2026 IETF Trust and the persons identified
      as authors of the code. All rights reserved.
 
      Redistribution and use in source and binary forms, with
@@ -50,7 +50,7 @@ module ietf-quic-common {
      (RFC 8174) when, and only when, they appear in all
      capitals, as shown here.";
 
-  revision 2025-10-17 {
+  revision 2026-02-12 {
     description
       "Initial version";
     reference
