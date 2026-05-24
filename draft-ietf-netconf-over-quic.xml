@@ -406,7 +406,8 @@ INSERT_TEXT_FROM_FILE(ietf-netconf-quic@YYYY-MM-DD.yang)
       <name>Security Considerations</name>
       <t>
           The security considerations described throughout
-          <xref target="RFC8446"/> and <xref target="RFC6241"/> apply here as
+          <xref target="RFC8446"/>, <xref target="RFC6241"/>, and
+          <xref target="I-D.ietf-netconf-netconf-client-server"/> apply here as
           well. This document requires verification of server identity and
           client identity according to <xref target="RFC7589"/>.
       </t>
