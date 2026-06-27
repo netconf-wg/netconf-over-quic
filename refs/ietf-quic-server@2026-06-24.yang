@@ -1,19 +1,38 @@
-module ietf-quic-common {
+module ietf-quic-server {
   yang-version 1.1;
   namespace
-    "urn:ietf:params:xml:ns:yang:ietf-quic-common";
-  prefix quiccmn;
+    "urn:ietf:params:xml:ns:yang:ietf-quic-server";
+  prefix quics;
 
-  import iana-quic-versions {
-    prefix iana-quic-versions;
-    reference "RFC AAAA: YANG Groupings for QUIC clients and QUIC servers";
+  import ietf-quic-common {
+    prefix quiccmn;
+    reference
+      "RFC AAAA: YANG Groupings for QUIC Clients and QUIC Servers";
   }
 
-  import iana-quic-transport {
-    prefix iana-quic-transport;
-    reference "RFC AAAA: YANG Groupings for QUIC clients and QUIC servers";
+  import ietf-tls-server {
+    prefix tlss;
+    reference
+      "RFC 9645: YANG Groupings for TLS Clients and TLS Servers";
   }
 
+  import ietf-tls-common {
+    prefix tlscmn;
+    reference
+      "RFC 9645: YANG Groupings for TLS Clients and TLS Servers";
+  }
+
+  import ietf-udp-server {
+    prefix udps;
+    reference
+      "RFC 9984: YANG Groupings for UDP Clients and UDP Servers";
+  }
+
+  import ietf-yang-semver {
+    prefix ysv;
+    reference
+      "draft-ietf-netmod-yang-semver: YANG Semantic Versioning";
+  }
 
   organization
     "IETF NETCONF (Network Configuration) Working Group";
@@ -24,10 +43,8 @@ module ietf-quic-common {
      Author:  Per Andersson <mailto:per.ietf@ionio.se>";
 
   description
-    "This module defines a reusable grouping that is common for
-     QUIC clients and QUIC servers. This grouping statement is
-     used by both 'ietf-quic-client' and 'ietf-quic-server'
-     modules.
+    "This module defines reusable groupings for QUIC servers that
+     can be used as a basis for specific QUIC server instances.
 
      Copyright (c) 2026 IETF Trust and the persons identified
      as authors of the code. All rights reserved.
@@ -50,7 +67,8 @@ module ietf-quic-common {
      (RFC 8174) when, and only when, they appear in all
      capitals, as shown here.";
 
-  revision 2026-02-12 {
+  revision 2026-06-24 {
+    ysv:version 1.0.0-draft-quic-client-server-latest;
     description
       "Initial version";
     reference
@@ -59,34 +77,21 @@ module ietf-quic-common {
 
   // Groupings
 
-  grouping version {
+  grouping quic-server {
     description
-      "A reusable grouping for QUIC Versions.";
+      "Grouping to configure a QUIC server.";
     reference
-      "RFC 9000: QUIC: A UDP-Based Multiplexed and Secure Transport
-       RFC 9369: QUIC Version 2";
+      "RFC 9000: QUIC: A UDP-Based Multiplexed and Secure Transport";
 
-    leaf-list version {
-      type iana-quic-versions:version;
+    uses tlss:tls-server-grouping {
+      if-feature "tlscmn:tls13 and not tlscmn:tls12";
       description
-        "The QUIC versions supported.";
+        "QUIC requires that TLS 1.3 (or later) is used.";
+      reference
+        "RFC 9001: Using TLS to Secure QUIC";
     }
-  }
-
-  grouping transport-parameters {
-    description
-      "A reusable grouping for QUIC Transport Parameters.";
-    reference
-      "RFC 9000: QUIC: A UDP-Based Multiplexed and Secure Transport
-       RFC 9221: An Unreliable Datagram Extension to QUIC
-       RFC 9287: Greasing the QUIC Bit
-       RFC 9312: Manageability of the QUIC Transport Protocol
-       RFC 9368: Compatible Version Negotiation for QUIC";
-
-    leaf leaf-list {
-      type iana-quic-transport:transport-parameter;
-      description
-        "A leaf list containing the QUIC transport parameters.";
-    }
+    uses udps:udp-server;
+    uses quiccmn:version;
+    uses quiccmn:transport-parameters;
   }
 }
