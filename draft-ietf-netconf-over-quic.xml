@@ -258,6 +258,16 @@ Layer                 Example
      <name>Call home considerations</name>
      <section>
           <name>protocol-layering perspective</name>
+          <t>
+            The Call Home mechanism is described in <xref target="RFC8071"/>.
+            However, <xref target="RFC8071"/> is based on SSH and TLS, and they
+            use TCP as transport protocol. Since QUIC is the transport protocol
+            for NETCONF over QUIC, implementation of Call Home for NoQ is also
+            different. Since QUIC embeds TLS 1.3 records in the packets, a
+                separate TLS record layer can be omitted (see
+            <xref target="RFC9001"/>).
+          </t>
+
           <t>The following diagram illustrates call home from a protocol-layering perspective based on QUIC:</t>
           <figure anchor="call-home-NoQ" align="left" suppress-title="false" pn="figure-2">
            <name>Call Home Sequence Diagram based on QUIC</name>
@@ -268,7 +278,7 @@ Layer                 Example
                  |----------------------------------->|
                  |                                    |
                  |                                    |
-                 |         2. NETCONF over QUIC       |
+                 |         2. NETCONF over QUIC (NoQ) |
                  |<-----------------------------------|
                  |                                    |
                  |                                    |
@@ -284,6 +294,10 @@ Layer                 Example
           <li>The NETCONF server begins by initiating a QUIC connection to the NETCONF client.</li>
           <li>Using this QUIC connection, the NETCONF client initiates a NETCONF session to the NETCONF server.</li>
         </ul>
+        <t>
+          Detailed description of the 'call home' mechanism is out of the scope
+          of this document.
+        </t>
      </section>
      <section>
           <name>RFC8071 Call Home Specific Case</name>
@@ -373,9 +387,10 @@ Layer                 Example
     <section>
       <name>YANG Module</name>
       <t>This YANG module has normative references to
-        <xref target="I-D.ietf-netconf-netconf-client-server"/> and
-        <xref target="I-D.ietf-netconf-quic-client-server"/>.</t>
-      <t>&lt;CODE BEGINS&gt; file "ietf-netconf-quic@YYYY-MM-DD.yang"</t>
+        <xref target="I-D.ietf-netconf-netconf-client-server"/>,
+        <xref target="I-D.ietf-netconf-quic-client-server"/>, and
+        <xref target="I-D.ietf-netmod-yang-semver"/>.</t>
+      <t>&lt;CODE BEGINS&gt; file "ietf-netconf-quic@1.0.0-draft-ietf-netconf-over-quic-latest.yang"</t>
       <figure>
         <artwork><![CDATA[
 INSERT_TEXT_FROM_FILE(ietf-netconf-quic@YYYY-MM-DD.yang)
@@ -406,10 +421,18 @@ INSERT_TEXT_FROM_FILE(ietf-netconf-quic@YYYY-MM-DD.yang)
       <name>Security Considerations</name>
       <t>
           The security considerations described throughout
-          <xref target="RFC8446"/>, <xref target="RFC6241"/>, and
+          <xref target="RFC8446"/>, <xref target="RFC6241"/>,
+          <xref target="RFC9000"/>, <xref target="RFC9001"/>,
+          <xref target="RFC8071"/> and
           <xref target="I-D.ietf-netconf-netconf-client-server"/> apply here as
-          well. This document requires verification of server identity and
+          well. "NoQ" requires verification of server identity and
           client identity according to <xref target="RFC7589"/>.
+      </t>
+      <t>
+        "NoQ" relies on QUIC, which itself relies on TLS 1.3 and thus by defalut
+        supports the protections against downgrade attacks described in
+        <xref target="RFC9325"/>.  QUIC specific issues and their mitigations are
+        described in <xref section="21" target="RFC9000"/>.
       </t>
       <t>If invalid data or malformed messages are encountered, a robust implementation of this document MUST silently discard the message without further processing and then stop the NETCONF session.</t>
     </section>
@@ -460,6 +483,8 @@ INSERT_TEXT_FROM_FILE(ietf-netconf-quic@YYYY-MM-DD.yang)
         <name>Normative References</name>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-netconf-netconf-client-server.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-netconf-quic-client-server.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-netmod-yang-semver.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-netmod-yang-module-filename.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.5277.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6241.xml"/>
@@ -469,6 +494,7 @@ INSERT_TEXT_FROM_FILE(ietf-netconf-quic@YYYY-MM-DD.yang)
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8369.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9000.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9001.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9325.xml"/>
       </references>
       <references>
         <name>Informative References</name>

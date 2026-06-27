@@ -28,6 +28,12 @@ module ietf-netconf-quic {
       "RFC CCCC: YANG Groupings for QUIC Clients and QUIC Servers";
   }
 
+  import ietf-yang-semver {
+    prefix ysv;
+    reference
+      "draft-ietf-netmod-yang-semver: YANG Semantic Versioning";
+  }
+
   organization
     "IETF NETCONF (Network Configuration) Working Group";
 
@@ -76,6 +82,7 @@ module ietf-netconf-quic {
      capitals, as shown here.";
 
   revision YYYY-MM-DD {
+    ysv:version 1.0.0-draft-ietf-netconf-over-quic-latest;
     description
       "Initial version";
     reference

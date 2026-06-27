@@ -52,7 +52,7 @@ endif
 
 $(next).xml: $(draft).xml
 	sed -e"s/$(basename $<)-latest/$(basename $@)/" -e"s/YYYY-MM-DD/$(shell date +%Y-%m-%d)/" $< > $@
-	sed -e"s/YYYY-MM-DD/$(shell date +%Y-%m-%d)/" ietf-netconf-quic.yang > ietf-netconf-quic\@$(shell date +%Y-%m-%d).yang
+	sed -e"s/$(basename $<)-latest/$(basename $@)/" -e"s/YYYY-MM-DD/$(shell date +%Y-%m-%d)/" ietf-netconf-quic.yang > ietf-netconf-quic\@$(shell date +%Y-%m-%d).yang
 	cd refs && ./validate-all.sh && ./gen-trees.sh && cd ..
 	#cd refs && ./gen-trees.sh && cd ..
 	./.insert-figures.sh $@ > tmp && mv tmp $@
